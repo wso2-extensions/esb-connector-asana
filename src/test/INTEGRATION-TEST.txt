@@ -11,11 +11,11 @@ Tested Platform:
 
  - Microsoft WINDOWS V-8.1
  - UBUNTU 13.04
- - WSO2 ESB 4.9.0
+ - WSO2 ESB 5.0.0-BETA
 
 Steps to follow in setting integration test.
 
- 1. Download ESB 4.9.0 by following the URL: http://wso2.com/products/enterprise-service-bus/
+ 1. Download ESB 5.0.0-BETA by following the URL: http://wso2.com/products/enterprise-service-bus/
 
  2. Copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
 
