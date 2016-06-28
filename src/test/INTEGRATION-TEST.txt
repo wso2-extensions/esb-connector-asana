@@ -31,20 +31,20 @@ Steps to follow in setting integration test.
    
  4. Update the Asana properties file at location "<ASANA_CONNECTOR_HOME>/asana-connector/asana-connector-1.0.0/org.wso2.carbon.connector/src/test/resources/artifacts/ESB/connector/config" as below.
 
-	i)     	apiUrl			- 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
+	i)     	apiUrl		- 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
 	ii)    	apiVersion      - 	The API version of asana.
-	iii)	clientId		- 	The Client ID uniquely identifies the application making the request.
-	iv)		clientSecret	-	The Client Secret belonging to the app, found in the details pane of the developer console.
-	v)		redirectUri		- 	The URI to redirect to on success or error. This must match the Redirect URL specified in 
-								the application settings.
-	vi)		grantType		-	One of authorization_code, refresh_token or password.
+	iii)	clientId	- 	The Client ID uniquely identifies the application making the request.
+	iv)	clientSecret	-	The Client Secret belonging to the app, found in the details pane of the developer console.
+	v)	redirectUri	- 	The URI to redirect to on success or error. This must match the Redirect URL specified in 
+					the application settings.
+	vi)	grantType	-	One of authorization_code, refresh_token or password.
 	vii)	refreshToken	-	If exchanging a code, a long-lived token that can be used to get new access tokens when old 
-								ones expire.
-	viii)	accessToken		-	The token to use in future requests against the API.
-	ix)		workspace		-	The ID for a workspace.
-	x)		attachment		-	The ID for an attachment.
+					ones expire.
+	viii)	accessToken	-	The token to use in future requests against the API.
+	ix)	workspace	-	The ID for a workspace.
+	x)	attachment	-	The ID for an attachment.
 
         Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
 
- 5. Navigate to "{ESB_CONNECTORS_HOME}/" and run the following command.
-          $ mvn clean install
+ 5. Navigate to "{ASANA_HOME}/" and run the following command.
+        $ mvn clean install
