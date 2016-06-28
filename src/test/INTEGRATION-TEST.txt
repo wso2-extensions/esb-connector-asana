@@ -15,7 +15,7 @@ Tested Platform:
 
 Steps to follow in setting integration test.
 
- 1. Download ESB 4.9.o by following the URL: http://wso2.com/products/enterprise-service-bus/
+ 1. Download ESB 4.9.0 by following the URL: http://wso2.com/products/enterprise-service-bus/
 
  2. Copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
 
