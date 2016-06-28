@@ -11,11 +11,11 @@ Tested Platform:
 
  - Microsoft WINDOWS V-8.1
  - UBUNTU 13.04
- - WSO2 ESB 4.9.0
+ - WSO2 ESB 5.0.0-BETA
 
 Steps to follow in setting integration test.
 
- 1. Download ESB 4.9.0 by following the URL: http://wso2.com/products/enterprise-service-bus/
+ 1. Download latest ESB from the following URL: http://wso2.com/products/enterprise-service-bus/
 
  2. Copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
 
@@ -46,8 +46,5 @@ Steps to follow in setting integration test.
 
         Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
 
- 5. Make sure that the Asana connector is set as a module in esb-connectors parent pom.
-      <module>asana/asana-connector/asana-connector-1.0.0/org.wso2.carbon.connector</module>
-
- 6. Navigate to "<ESB_CONNECTORS_HOME>" and run the following command.
+ 5. Navigate to "{ESB_CONNECTORS_HOME}/" and run the following command.
           $ mvn clean install
