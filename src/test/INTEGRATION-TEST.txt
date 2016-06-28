@@ -17,7 +17,7 @@ Steps to follow in setting integration test.
 
  1. Download latest ESB from the following URL: http://wso2.com/products/enterprise-service-bus/
 
- 2. Copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
+ 2. Copy that zip file in to location "<ASANA_HOME>/repository/".
 
  3. Create a Asana trial account and derive the API Key.
    i)   Using the URL "https://app.asana.com/" create a Asana trial account.
