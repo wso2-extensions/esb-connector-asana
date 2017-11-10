@@ -17,17 +17,35 @@ Steps to follow in setting integration test.
 
  2. Copy that zip file in to location "<ASANA_HOME>/repository/".
 
- 3. Create a Asana trial account and derive the API Key.
-   i)   Using the URL "https://app.asana.com/" create a Asana trial account.
-   ii)  Login to the created Asana account and go to 
-		- https://asana.com/developers/documentation/getting-started/auth#register-an-app 
-		- visit your Account Settings dialog
-		- Developer create application
-		- Give proper App Name, App URL, Redirect URL and get client Id, client Secret.
-		- Get Authorization code from https://app.asana.com/-/oauth_authorize?client_id={Your client_Id}&redirect_uri={Your URI}&response_type=code&state=somerandomstate
-		- Use authorization Code get the access token and refresh token from https://app.asana.com/-/oauth_token?client_id={Your client_Id}&client_secret={Your client_secret}&redirect_uri={Your URI}&code={Created authorization_code}&grant_type=authorization_code
-   
- 4. Update the Asana properties file at location "<ASANA_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" as below. 
+ 3. Create an Asana account using URL: https://app.asana.com/
+
+ 4. Follow the below mentioned steps to generate the access token
+    i)      Login to the created Asana account and go to
+            https://asana.com/developers/documentation/getting-started/auth#register-an-app
+    ii)     Click on “visit your Account Settings dialog”
+    iii)    Click on Developer create application or Manage Developer App
+    iv)     Go to “Add New Application”
+    v)      Give proper
+            App Name - New application name
+            App URL - Enter any sample URL
+            Redirect URL -  Enter the Callback URL
+            Then click on create
+    vi)     Get client Id, client Secret and store them for future use
+    vii)    Get the Authorization code from Azure Access Control Service Construct the authorization url as follows:
+            https://app.asana.com/-/oauth_authorize?client_id=<client_Id>&redirect_uri=<redirect_url>&response_type=code&state=somerandomstate
+    viii)   Asana Online site redirects the browser back to the redirect URI that was specified when the app was registered in step 5. It also includes the authorization code as a query string. The redirect URL is structured like the following:
+            https://redirect_url?code=<authorization_code>&state=somerandomstate
+            Extract query string value code from above url and it will be used in next step.
+    ix)     Get the access token and refresh token from code:
+            Construct the below post request:
+            https://app.asana.com/-/oauth_token?client_id=<client_id>&client_secret=<client_secret>&redirect_uri=<redirect_uri>&code=<authorization_code>&grant_type=authorization_code
+    x)      Get the access token from refresh token:
+            This step is almost similar to step 9, except 2 differences. Here the difference is that we use:
+            * grant_type as refresh_token and
+            * refresh_token instead of code in step 9 and use the refresh token which we have saved in step 9.
+            https://app.asana.com/-/oauth_token?client_id=<client_id>&client_secret=<client_secret>&redirect_uri=<redirect_uri>&refresh_token=<refresh_token>&grant_type=refresh_token
+
+ 5. Update the Asana properties file at location "<ASANA_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" as below.
 
 	i)   apiUrl		    - 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
 	ii)  apiVersion     - 	The API version of asana.
@@ -44,5 +62,5 @@ Steps to follow in setting integration test.
 
         Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
 
- 5. Navigate to "{ASANA_HOME}/" and run the following command.
+ 6. Navigate to "{ASANA_HOME}/" and run the following command.
         $ mvn clean install
