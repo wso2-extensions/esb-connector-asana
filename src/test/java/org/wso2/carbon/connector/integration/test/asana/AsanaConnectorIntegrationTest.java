@@ -40,7 +40,9 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("asana-connector-1.0.1-SNAPSHOT");
+        String connectorName = System.getProperty("connector_name") + "-connector-" +
+                System.getProperty("connector_version") + ".zip";
+        init(connectorName);
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
         apiRequestHeadersMap.put("Accept-Charset", "UTF-8");
@@ -463,7 +465,7 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         esbRequestHeadersMap.put("Action", "urn:queryForTags");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_queryForTags_negative.json");
-        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 400);
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 404);
     }
 
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"queryForTagsNegative"},

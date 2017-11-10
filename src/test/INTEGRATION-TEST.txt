@@ -1,21 +1,19 @@
-Product: Integration tests for WSO2 ESB asana connector
+Product: Integration tests for WSO2 EI asana connector
 
 Pre-requisites:
 
  - Maven 3.x
- - Java 1.6 or above
- - The org.wso2.esb.integration.integration-base project is required. The test suite has been configured to download this project automatically. If the automatic download fails, download the following project and compile it using the mvn clean install command to update your local repository:
-         https://github.com/wso2-extensions/esb-integration-base
+ - Java 1.8
 
 Tested Platform: 
 
  - Microsoft WINDOWS V-8.1
- - UBUNTU 13.04
- - WSO2 ESB 5.0.0-BETA
+ - UBUNTU 16.04 LTS
+ - WSO2 EI 6.1.1
 
 Steps to follow in setting integration test.
 
- 1. Download latest ESB from the following URL: http://wso2.com/products/enterprise-service-bus/
+ 1. Download latest EI from the following URL: http://wso2.com/products/enterprise-service-bus/
 
  2. Copy that zip file in to location "<ASANA_HOME>/repository/".
 
@@ -31,18 +29,18 @@ Steps to follow in setting integration test.
    
  4. Update the Asana properties file at location "<ASANA_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" as below. 
 
-	i)     	apiUrl		- 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
-	ii)    	apiVersion      - 	The API version of asana.
-	iii)	clientId	- 	The Client ID uniquely identifies the application making the request.
-	iv)	clientSecret	-	The Client Secret belonging to the app, found in the details pane of the developer console.
-	v)	redirectUri	- 	The URI to redirect to on success or error. This must match the Redirect URL specified in 
-					the application settings.
-	vi)	grantType	-	One of authorization_code, refresh_token or password.
-	vii)	refreshToken	-	If exchanging a code, a long-lived token that can be used to get new access tokens when old 
-					ones expire.
-	viii)	accessToken	-	The token to use in future requests against the API.
-	ix)	workspace	-	The ID for a workspace.
-	x)	attachment	-	The ID for an attachment.
+	i)   apiUrl		    - 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
+	ii)  apiVersion     - 	The API version of asana.
+	iii) clientId	    - 	The Client ID uniquely identifies the application making the request.
+	iv)	 clientSecret	-	The Client Secret belonging to the app, found in the details pane of the developer console.
+	v)	 redirectUri	- 	The URI to redirect to on success or error. This must match the Redirect URL specified in
+					        the application settings.
+	vi)	 grantType	    -	One of authorization_code, refresh_token or password.
+	vii) refreshToken	-	If exchanging a code, a long-lived token that can be used to get new access tokens when old
+					        ones expire.
+	viii)accessToken	-	The token to use in future requests against the API.
+	ix)	 workspace	    -	The ID for a workspace.
+	x)	 attachment	    -	The ID for an attachment.
 
         Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
 
