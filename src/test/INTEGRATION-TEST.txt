@@ -63,4 +63,4 @@ Steps to follow in setting integration test.
         Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
 
  6. Navigate to "{ASANA_HOME}/" and run the following command.
-        $ mvn clean install
+        $ mvn clean install -Dskip-tests=false
