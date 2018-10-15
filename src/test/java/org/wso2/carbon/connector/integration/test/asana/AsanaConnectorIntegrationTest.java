@@ -17,6 +17,8 @@
  */
 package org.wso2.carbon.connector.integration.test.asana;
 
+import com.asana.Client;
+import com.asana.models.Attachment;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -25,6 +27,7 @@ import org.testng.annotations.Test;
 import org.wso2.connector.integration.test.base.ConnectorIntegrationTestBase;
 import org.wso2.connector.integration.test.base.RestResponse;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +43,13 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+
+        addCertificatesToEIKeyStore("client-truststore.jks", "wso2carbon");
         String connectorName = System.getProperty("connector_name") + "-connector-" +
                 System.getProperty("connector_version") + ".zip";
         init(connectorName);
+        getApiConfigProperties();
+
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
         apiRequestHeadersMap.put("Accept-Charset", "UTF-8");
@@ -59,6 +66,32 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         connectorProperties.put("accessToken", accessToken);
         apiRequestHeadersMap.put("Authorization", "Bearer " + accessToken);
         apiRequestHeadersMap.putAll(esbRequestHeadersMap);
+        getWorkspaceId();
+        getAttachementId();
+    }
+
+    public void getWorkspaceId() throws IOException, JSONException {
+        String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/" +
+                connectorProperties.getProperty("apiVersion") + "/workspaces";
+        RestResponse<JSONObject> apiRestResponse =
+                sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+        String workspaceId = apiRestResponse.getBody().getJSONArray("data").getJSONObject(0).get("id").toString();
+        connectorProperties.put("workspace", workspaceId);
+    }
+
+    public void getAttachementId() throws IOException, JSONException {
+
+        esbRequestHeadersMap.put("Action", "urn:createTask");
+        RestResponse<JSONObject> esbRestResponse =
+                sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createTask_mandatory.json");
+
+        String taskId = esbRestResponse.getBody().getJSONObject("data").getString("id").toString();
+        Client client = Client.accessToken(connectorProperties.getProperty("accessToken"));
+
+        Attachment attachment = client.attachments.createOnTask(taskId,
+                new ByteArrayInputStream("hello world".getBytes()), "upload.txt", "text/plain"
+        ).execute();
+        connectorProperties.put("attachment", attachment.id);
     }
 
     @Test(groups = {"wso2.esb"},
@@ -403,7 +436,7 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 apiRestResponse.getBody().getJSONObject("data").get("created_at"));
     }
 
-    @Test(groups = {"wso2.esb"},
+    @Test(groups = {"wso2.esb"},dependsOnMethods = {"getSingleTagMandatory"},
             description = "asana {getSingleTag} integration test.")
     public void getSingleTagNegative() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getSingleTag");
@@ -453,10 +486,6 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         final int esbResponseArrayLength = esbRestResponse.getBody().getJSONArray("data").length();
         final int apiResponseArrayLength = apiRestResponse.getBody().getJSONArray("data").length();
         Assert.assertEquals(esbResponseArrayLength, apiResponseArrayLength);
-        Assert.assertEquals(esbRestResponse.getBody().getJSONArray("data").getJSONObject(0).get("id"),
-                apiRestResponse.getBody().getJSONArray("data").getJSONObject(0).get("id"));
-        Assert.assertEquals(esbRestResponse.getBody().getJSONArray("data").getJSONObject(0).get("name"),
-                apiRestResponse.getBody().getJSONArray("data").getJSONObject(0).get("name"));
     }
 
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"queryForTagsMandatory"},
@@ -607,7 +636,7 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_queryForTasks_mandatory.json");
         String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/" +
                 connectorProperties.getProperty("apiVersion") + "/tasks?workspace=" +
-                connectorProperties.getProperty("workspace") + "&assignee=nirthika.rajendran@gmail.com";
+                connectorProperties.getProperty("workspace") + "&assignee=" + connectorProperties.getProperty("email");
         RestResponse<JSONObject> apiRestResponse =
                 sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
         Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
@@ -629,7 +658,7 @@ public class AsanaConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_queryForTasks_optional.json");
         String apiEndPoint = connectorProperties.getProperty("apiUrl") + "/" +
                 connectorProperties.getProperty("apiVersion") + "/tasks?workspace=" +
-                connectorProperties.getProperty("workspace") + "&assignee=nirthika.rajendran@gmail.com" +
+                connectorProperties.getProperty("workspace") + "&assignee=" + connectorProperties.getProperty("email") +
                 "&modified_since=" + connectorProperties.getProperty("createdAt") +
                 "&completed_since=" + connectorProperties.getProperty("createdAt");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);

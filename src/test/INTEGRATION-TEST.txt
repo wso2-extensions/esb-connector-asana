@@ -9,7 +9,7 @@ Tested Platform:
 
  - Microsoft WINDOWS V-8.1
  - UBUNTU 16.04 LTS
- - WSO2 EI 6.2.0
+ - WSO2 EI 6.4.0
 
 Steps to follow in setting integration test.
 
@@ -45,7 +45,9 @@ Steps to follow in setting integration test.
             * refresh_token instead of code in step 9 and use the refresh token which we have saved in step 9.
             https://app.asana.com/-/oauth_token?client_id=<client_id>&client_secret=<client_secret>&redirect_uri=<redirect_uri>&refresh_token=<refresh_token>&grant_type=refresh_token
 
- 5. Update the Asana properties file at location "<ASANA_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" as below.
+ 5. Update the 'esb-connector-asana.properties' file at the location "{ASANA_CONNECTOR_HOME}/repository".
+
+ 6. Following are the properties used in the 'esb-connector-asana.properties' file and 'asana.properties' file at location "<ASANA_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" to run the integration tests.
 
 	i)   apiUrl		    - 	The API URL specific to the domain of the created account. e.g. https://app.asana.com/api
 	ii)  apiVersion     - 	The API version of asana.
@@ -56,11 +58,9 @@ Steps to follow in setting integration test.
 	vi)	 grantType	    -	One of authorization_code, refresh_token or password.
 	vii) refreshToken	-	If exchanging a code, a long-lived token that can be used to get new access tokens when old
 					        ones expire.
-	viii)accessToken	-	The token to use in future requests against the API.
-	ix)	 workspace	    -	The ID for a workspace.
-	x)	 attachment	    -	The ID for an attachment.
+	viii)workspace	    -	The ID for a workspace.
+	ix)	 attachment	    -	The ID for an attachment.
+	x)   email          -   The email used to create the Asana account.
 
-        Note - There should be at least a difference of 10 minutes between eventOccurredAfter value and eventOccurredBefore value.   
-
- 6. Navigate to "{ASANA_HOME}/" and run the following command.
+ 7. Navigate to "{ASANA_HOME}/" and run the following command.
         $ mvn clean install -Dskip-tests=false

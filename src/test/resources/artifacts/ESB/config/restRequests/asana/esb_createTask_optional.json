@@ -11,8 +11,8 @@
   "notes": "create_a_task",
   "followers": [
     "me",
-    "nirthika.rajendran@gmail.com"
+    "%s(email)"
   ],
   "name": "subrocktask",
-  "assignee": "nirthika.rajendran@gmail.com"
+  "assignee": "%s(email)"
 }

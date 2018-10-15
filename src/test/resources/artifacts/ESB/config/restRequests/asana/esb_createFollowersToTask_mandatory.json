@@ -9,7 +9,6 @@
   "redirectUri": "%s(redirectUri)",
   "taskId": "%s(taskId2)",
   "followers": [
-    "kugarajeevan14011993@gmail.com",
-    "iamdharshi@gmail.com "
+    "%s(email)"
   ]
 }

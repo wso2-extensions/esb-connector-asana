@@ -8,5 +8,5 @@
   "grantType": "%s(grantType)",
   "redirectUri": "%s(redirectUri)",
   "workspace": "%s(workspace)",
-  "assignee": "nirthika.rajendran@gmail.com"
+  "assignee": "%s(email)"
 }
