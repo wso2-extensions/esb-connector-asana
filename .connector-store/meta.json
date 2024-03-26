@@ -1,0 +1,12 @@
+{
+    "name": "Asana",
+    "owner": "University of Jaffna",
+    "category": "Issue Tracking and Project Management",
+    "documentationUrl": "https://docs.wso2.com/display/ESBCONNECTORS/Asana+Connector",
+    "description": "The Asana connector allows you to access the Asana REST API through WSO2 ESB. Asana is a web and mobile application designed to help teams track their work.",
+    "status": "Active",
+    "labels": [
+        "PM"
+    ],
+    "releases": []
+}
